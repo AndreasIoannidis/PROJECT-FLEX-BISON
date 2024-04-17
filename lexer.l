@@ -9,6 +9,8 @@
 
 "public"        {printf("%s",yytext); return PUBLIC; }
 "class"         {printf("%s",yytext); return CLASS; }
+"char"            {printf("%s",yytext); return CHAR; }
+"int"            {printf("%s",yytext); return INT; }
 "void"          {printf("%s",yytext); return VOID; }
 "out.println"   {printf("%s",yytext); return PRINTLN; }
 [a-zA-Z]+       {printf("%s",yytext); return IDENTIFIER; }
