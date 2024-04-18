@@ -13,7 +13,7 @@
 "int"            {printf("%s",yytext); return INT; }
 "void"          {printf("%s",yytext); return VOID; }
 "out.println"   {printf("%s",yytext); return PRINTLN; }
-[a-zA-Z]+       {printf("%s",yytext); return IDENTIFIER; }
+[a-zA-Z_][a-zA-Z0-9_]*      {printf("%s",yytext); return IDENTIFIER; }
 "{"             {printf("%s",yytext); return LBRACE; }
 "}"             {printf("%s",yytext); return RBRACE; }
 "("             {printf("%s",yytext); return LPAREN; }
