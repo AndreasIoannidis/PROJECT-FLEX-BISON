@@ -1,53 +1,32 @@
 %{
+#include "parser.tab.h"
 #include <stdio.h>
 #include <stdlib.h>
-extern int yylex();
-extern FILE* yyin;
-void yyerror(const char *s);
+#include <string.h>
 %}
 
-%token PUBLIC CLASS VOID PRINTLN IDENTIFIER LBRACE RBRACE LPAREN RPAREN SEMICOLON STRING_LITERAL INT CHAR ASSIGNMENT DOUBLE BOOLEAN STRING
+%%
+
+"public"        {printf("%s",yytext); return PUBLIC; }
+"class"         {printf("%s",yytext); return CLASS; }
+"void"          {printf("%s",yytext); return VOID; }
+"int"          {printf("%s",yytext); return INT; }
+"char"          {printf("%s",yytext); return CHAR; }
+"double"          {printf("%s",yytext); return DOUBLE; }
+"boolean"          {printf("%s",yytext); return BOOLEAN; }
+"String"          {printf("%s",yytext); return STRING; }
+"out.println"   {printf("%s",yytext); return PRINTLN; }
+[a-zA-Z_][a-zA-Z0-9_]*   {printf("%s",yytext); return IDENTIFIER; }
+"{"             {printf("%s",yytext); return LBRACE; }
+"}"             {printf("%s",yytext); return RBRACE; }
+"("             {printf("%s",yytext); return LPAREN; }
+")"             {printf("%s",yytext); return RPAREN; }
+";"             {printf("%s",yytext); return SEMICOLON; }
+\"[^\"\n]*\"    {printf("%s",yytext); return STRING_LITERAL; }
+.               {printf("%s",yytext); /* Ignore any other characters */ }
 
 %%
 
-program : class_declaration | variable_declaration
-        ;
-
-variable_declaration : INT IDENTIFIER SEMICOLON | CHAR IDENTIFIER SEMICOLON | DOUBLE IDENTIFIER SEMICOLON | BOOLEAN IDENTIFIER SEMICOLON | STRING IDENTIFIER SEMICOLON
-                     ;
-
-class_declaration : PUBLIC CLASS IDENTIFIER LBRACE method_declaration  RBRACE
-                   ;
-
-method_declaration : PUBLIC VOID IDENTIFIER LPAREN RPAREN LBRACE statement RBRACE |
-                    ;
-
-statement : IDENTIFIER '.' IDENTIFIER LPAREN STRING_LITERAL RPAREN SEMICOLON
-          | PRINTLN LPAREN STRING_LITERAL RPAREN SEMICOLON 
-          ;
-     
-%%
-
-void yyerror(const char *s) {
-    fprintf(stderr, "%s\n", s);
-}
-
-int main(int argc, char *argv[]) {
-    if (argc < 2) {
-        printf("Usage: %s <input_file>\n", argv[0]);
-        return 1;
-    }
-
-    FILE* input_file = fopen(argv[1], "r");
-    if (!input_file) {
-        perror("Error opening input file");
-        return 1;
-    }
-
-    yyin = input_file;
-
-    yyparse();
-
-    fclose(input_file);
-    return 0;
+int yywrap() {
+    return 1;
 }
