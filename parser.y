@@ -6,14 +6,14 @@ extern FILE* yyin;
 void yyerror(const char *s);
 %}
 
-%token PUBLIC CLASS VOID PRINTLN IDENTIFIER LBRACE RBRACE LPAREN RPAREN SEMICOLON STRING_LITERAL INT CHAR ASSIGNMENT DOUBLE BOOLEAN STRING
+%token PUBLIC CLASS VOID PRINTLN IDENTIFIER LBRACE RBRACE LPAREN RPAREN SEMICOLON STRING_LITERAL INT CHAR ASSIGNMENT DOUBLE BOOLEAN STRING PRIVATE NEW
 
 %%
 
-program : class_declaration | variable_declaration
+program : class_declaration | variable_declaration | object_creation | member_access
         ;
 
-variable_declaration : INT IDENTIFIER SEMICOLON | CHAR IDENTIFIER SEMICOLON | DOUBLE IDENTIFIER SEMICOLON | BOOLEAN IDENTIFIER SEMICOLON | STRING IDENTIFIER SEMICOLON
+variable_declaration : data_type IDENTIFIER SEMICOLON
                      ;
 
 class_declaration : PUBLIC CLASS IDENTIFIER LBRACE method_declaration  RBRACE
@@ -25,6 +25,28 @@ method_declaration : PUBLIC VOID IDENTIFIER LPAREN RPAREN LBRACE statement RBRAC
 statement : IDENTIFIER '.' IDENTIFIER LPAREN STRING_LITERAL RPAREN SEMICOLON
           | PRINTLN LPAREN STRING_LITERAL RPAREN SEMICOLON 
           ;
+
+data_type : INT
+          | CHAR
+          | DOUBLE
+          | STRING
+          | BOOLEAN
+          | modifier data_type
+          ;
+
+modifier : PUBLIC
+         | PRIVATE
+         | /* Κανένας modifier */
+         ;
+
+object_creation : IDENTIFIER IDENTIFIER ASSIGNMENT NEW IDENTIFIER LPAREN RPAREN SEMICOLON
+                ;
+
+member_access : IDENTIFIER '.' IDENTIFIER LPAREN RPAREN SEMICOLON
+          | IDENTIFIER '.' IDENTIFIER SEMICOLON 
+          ;
+
+
      
 %%
 
