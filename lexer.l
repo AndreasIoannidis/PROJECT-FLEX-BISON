@@ -20,8 +20,10 @@
 "!="             {printf("%s",yytext); return NOTEQUAL; }
 "&&"             {printf("%s",yytext); return AND; }
 "||"             {printf("%s",yytext); return OR; }
+"!"                 {printf("%s",yytext); return NOT; }
 "do"          {printf("%s",yytext); return DO; }
 "while"          {printf("%s",yytext); return WHILE; }
+"for"               {printf("%s",yytext); return FOR; }
 "int"          {printf("%s",yytext); return INT; }
 "char"          {printf("%s",yytext); return CHAR; }
 "double"          {printf("%s",yytext); return DOUBLE; }
