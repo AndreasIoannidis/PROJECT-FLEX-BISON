@@ -25,6 +25,11 @@
 ")"             {printf("%s",yytext); return RPAREN; }
 ";"             {printf("%s",yytext); return SEMICOLON; }
 "="             {printf("%s",yytext); return ASSIGNMENT; }
+[0-9]+          {printf("%s",yytext); return NUMBER; }
+"+"             {printf("%s",yytext); return PLUS; }
+"-"             {printf("%s",yytext); return MINUS; }
+"*"             {printf("%s",yytext); return MULT; }
+"/"             {printf("%s",yytext); return DIV; }
 \"[^\"\n]*\"    {printf("%s",yytext); return STRING_LITERAL; }
 .               {printf("%s",yytext); /* Ignore any other characters */ }
 
