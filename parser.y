@@ -7,12 +7,12 @@ void yyerror(const char *s);
 %}
 
 %token PUBLIC CLASS VOID PRINTLN IDENTIFIER LBRACE RBRACE LPAREN RPAREN SEMICOLON STRING_LITERAL INT CHAR ASSIGNMENT DOUBLE BOOLEAN STRING PRIVATE NEW PLUS DIV MINUS MULT NUMBER 
-%token DO WHILE AND OR GREATER LESS EQUAL NOTEQUAL GTEQ LTEQ
+%token DO WHILE AND OR GREATER LESS EQUAL NOTEQUAL GTEQ LTEQ FOR NOT
 
 
 %%
 
-program : class_declaration | variable_declaration | object_creation | member_access | method_declaration | statement | assignment | do_while_loop | condition
+program : class_declaration | variable_declaration | object_creation | member_access | method_declaration | statement | assignment | do_while_loop | condition | for_loop
         ;
 
 variable_declaration : data_type IDENTIFIER SEMICOLON
@@ -32,7 +32,7 @@ statement : IDENTIFIER '.' IDENTIFIER LPAREN STRING_LITERAL RPAREN SEMICOLON
           | PRINTLN LPAREN STRING_LITERAL RPAREN SEMICOLON | IDENTIFIER |
           ;
 
-assignment : IDENTIFIER ASSIGNMENT expression SEMICOLON
+assignment : IDENTIFIER ASSIGNMENT expression SEMICOLON 
            ;
 
 expression : IDENTIFIER
@@ -99,9 +99,11 @@ comp_operator : GREATER
               |
               ;
 
+for_loop : FOR LPAREN assignment_statement SEMICOLON condition SEMICOLON assignment_statement RPAREN LBRACE statement RBRACE
+         ;
 
-
-
+assignment_statement : IDENTIFIER ASSIGNMENT expression
+                      ;
 
 %%
 
