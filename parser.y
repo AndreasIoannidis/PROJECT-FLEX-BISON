@@ -6,11 +6,13 @@ extern FILE* yyin;
 void yyerror(const char *s);
 %}
 
-%token PUBLIC CLASS VOID PRINTLN IDENTIFIER LBRACE RBRACE LPAREN RPAREN SEMICOLON STRING_LITERAL INT CHAR ASSIGNMENT DOUBLE BOOLEAN STRING PRIVATE NEW PLUS DIV MINUS MULT NUMBER
+%token PUBLIC CLASS VOID PRINTLN IDENTIFIER LBRACE RBRACE LPAREN RPAREN SEMICOLON STRING_LITERAL INT CHAR ASSIGNMENT DOUBLE BOOLEAN STRING PRIVATE NEW PLUS DIV MINUS MULT NUMBER 
+%token DO WHILE AND OR GREATER LESS EQUAL NOTEQUAL GTEQ LTEQ
+
 
 %%
 
-program : class_declaration | variable_declaration | object_creation | member_access | method_declaration | statement | assignment
+program : class_declaration | variable_declaration | object_creation | member_access | method_declaration | statement | assignment | do_while_loop | condition
         ;
 
 variable_declaration : data_type IDENTIFIER SEMICOLON
@@ -74,8 +76,33 @@ member_access : IDENTIFIER '.' IDENTIFIER LPAREN RPAREN SEMICOLON
           | IDENTIFIER '.' IDENTIFIER SEMICOLON 
           ;
 
+do_while_loop : DO LBRACE program RBRACE WHILE LPAREN condition RPAREN SEMICOLON 
+              ;
 
-     
+condition : expression
+          | expression comp_operator expression
+          | LPAREN condition RPAREN
+          | condition logical_operator condition
+          ;
+
+logical_operator : AND 
+                 | OR 
+                 |
+                 ;
+                
+comp_operator : GREATER 
+              | LESS
+              | EQUAL 
+              | NOTEQUAL 
+              | GTEQ 
+              | LTEQ 
+              |
+              ;
+
+
+
+
+
 %%
 
 
