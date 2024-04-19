@@ -12,6 +12,16 @@
 "new"             {printf("%s",yytext); return NEW; }
 "class"         {printf("%s",yytext); return CLASS; }
 "void"          {printf("%s",yytext); return VOID; }
+">"             {printf("%s",yytext); return GREATER; }
+"<"             {printf("%s",yytext); return LESS; }
+">="             {printf("%s",yytext); return GTEQ; }
+"<="             {printf("%s",yytext); return LTEQ; }
+"=="             {printf("%s",yytext); return EQUAL; }
+"!="             {printf("%s",yytext); return NOTEQUAL; }
+"&&"             {printf("%s",yytext); return AND; }
+"||"             {printf("%s",yytext); return OR; }
+"do"          {printf("%s",yytext); return DO; }
+"while"          {printf("%s",yytext); return WHILE; }
 "int"          {printf("%s",yytext); return INT; }
 "char"          {printf("%s",yytext); return CHAR; }
 "double"          {printf("%s",yytext); return DOUBLE; }
