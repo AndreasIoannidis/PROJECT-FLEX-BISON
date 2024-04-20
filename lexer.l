@@ -6,8 +6,7 @@
 %}
 
 %%
-"//".*                  /* Ignore single-line comments */
-"/*".*"*/"              /* Ignore multi-line comments */
+
 "public"        {printf("%s",yytext); return PUBLIC; }
 "private"        {printf("%s",yytext); return PRIVATE; }
 "new"             {printf("%s",yytext); return NEW; }
