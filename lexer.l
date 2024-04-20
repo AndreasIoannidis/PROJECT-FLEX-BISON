@@ -30,12 +30,21 @@
 "boolean"          {printf("%s",yytext); return BOOLEAN; }
 "String"          {printf("%s",yytext); return STRING; }
 "out.println"   {printf("%s",yytext); return PRINTLN; }
+"out.print"   {printf("%s",yytext); return PRINT; }
+"if"            {printf("%s",yytext); return IF; }
+"else"          {printf("%s",yytext); return ELSE; }
+"else if"       {printf("%s",yytext); return ELSEIF; }
+"switch"        {printf("%s",yytext); return SWITCH; }
+"case"          {printf("%s",yytext); return CASE; }
+"default"       {printf("%s",yytext); return DEFAULT; }
+":"       {printf("%s",yytext); return COLON; }
 [a-zA-Z_][a-zA-Z0-9_]*   {printf("%s",yytext); return IDENTIFIER; }
 "{"             {printf("%s",yytext); return LBRACE; }
 "}"             {printf("%s",yytext); return RBRACE; }
 "("             {printf("%s",yytext); return LPAREN; }
 ")"             {printf("%s",yytext); return RPAREN; }
 ";"             {printf("%s",yytext); return SEMICOLON; }
+","             {printf("%s",yytext); return COMMA; }
 "="             {printf("%s",yytext); return ASSIGNMENT; }
 [0-9]+          {printf("%s",yytext); return NUMBER; }
 "+"             {printf("%s",yytext); return PLUS; }
