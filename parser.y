@@ -43,6 +43,7 @@ statement : IDENTIFIER '.' IDENTIFIER LPAREN STRING_LITERAL RPAREN SEMICOLON
           | RETURN expression SEMICOLON
           | BREAK SEMICOLON
           | COMMENTS
+          |
           ;
 
 assignment : IDENTIFIER ASSIGNMENT expression SEMICOLON 
