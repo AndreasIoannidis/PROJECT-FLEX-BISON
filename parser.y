@@ -7,12 +7,12 @@ void yyerror(const char *s);
 %}
 
 %token PUBLIC CLASS VOID PRINTLN IDENTIFIER LBRACE RBRACE LPAREN RPAREN SEMICOLON STRING_LITERAL INT CHAR ASSIGNMENT DOUBLE BOOLEAN STRING PRIVATE NEW PLUS DIV MINUS MULT NUMBER 
-%token DO WHILE AND OR GREATER LESS EQUAL NOTEQUAL GTEQ LTEQ FOR NOT
+%token DO WHILE AND OR GREATER LESS EQUAL NOTEQUAL GTEQ LTEQ FOR NOT IF ELSE ELSEIF SWITCH CASE DEFAULT COLON COMMA PRINT
 
 
 %%
 
-program : class_declaration | variable_declaration | object_creation | member_access | method_declaration | statement | assignment | do_while_loop | condition | for_loop
+program : class_declaration | variable_declaration | object_creation | member_access | method_declaration | statement | assignment | do_while_loop | condition | for_loop | if_statement | switch_statement
         ;
 
 variable_declaration : data_type IDENTIFIER SEMICOLON
@@ -26,10 +26,14 @@ method_declaration : PUBLIC VOID IDENTIFIER LPAREN RPAREN LBRACE statement RBRAC
             | PUBLIC VOID IDENTIFIER LPAREN RPAREN LBRACE statement RBRACE SEMICOLON 
             | PRIVATE VOID IDENTIFIER LPAREN RPAREN LBRACE statement RBRACE  SEMICOLON
             |
-                    ;
+            ;
 
 statement : IDENTIFIER '.' IDENTIFIER LPAREN STRING_LITERAL RPAREN SEMICOLON
-          | PRINTLN LPAREN STRING_LITERAL RPAREN SEMICOLON | IDENTIFIER |
+          | PRINTLN LPAREN STRING_LITERAL RPAREN SEMICOLON 
+          | IDENTIFIER 
+          | PRINT LPAREN STRING_LITERAL RPAREN SEMICOLON
+          | PRINT LPAREN STRING_LITERAL COMMA IDENTIFIER RPAREN SEMICOLON
+          |
           ;
 
 assignment : IDENTIFIER ASSIGNMENT expression SEMICOLON 
@@ -42,18 +46,6 @@ expression : IDENTIFIER
            | expression MULT expression
            | expression DIV expression
            | LPAREN expression RPAREN
-           | expression PLUS NUMBER
-           | expression MINUS NUMBER
-           | expression MULT NUMBER
-           | expression DIV NUMBER
-           | NUMBER PLUS expression
-           | NUMBER MINUS expression
-           | NUMBER MULT expression
-           | NUMBER DIV expression
-           | LPAREN expression PLUS expression RPAREN
-           | LPAREN expression MINUS expression RPAREN
-           | LPAREN expression MULT expression RPAREN
-           | LPAREN expression DIV expression RPAREN
            ;
 
 data_type : INT
@@ -75,7 +67,7 @@ object_creation : IDENTIFIER IDENTIFIER ASSIGNMENT NEW IDENTIFIER LPAREN RPAREN 
 member_access : IDENTIFIER '.' IDENTIFIER LPAREN RPAREN SEMICOLON
           | IDENTIFIER '.' IDENTIFIER SEMICOLON 
           ;
-
+//DO WHILE
 do_while_loop : DO LBRACE program RBRACE WHILE LPAREN condition RPAREN SEMICOLON 
               ;
 
@@ -99,11 +91,33 @@ comp_operator : GREATER
               |
               ;
 
+//FOR
 for_loop : FOR LPAREN assignment_statement SEMICOLON condition SEMICOLON assignment_statement RPAREN LBRACE statement RBRACE
          ;
 
 assignment_statement : IDENTIFIER ASSIGNMENT expression
                       ;
+
+//IF
+if_statement : IF LPAREN condition RPAREN LBRACE program RBRACE
+             | IF LPAREN condition RPAREN LBRACE program RBRACE ELSE LBRACE program RBRACE
+             | IF LPAREN condition RPAREN LBRACE program RBRACE ELSEIF LPAREN condition RPAREN LBRACE program RBRACE
+             | if_statement ELSEIF LPAREN condition RPAREN LBRACE program RBRACE
+             | if_statement ELSE LBRACE program RBRACE
+             ;
+
+
+//SWITCH
+switch_statement :  SWITCH LPAREN condition RPAREN LBRACE switch_case default_case RBRACE
+                 ;
+
+
+switch_case : CASE condition COLON statement
+            | switch_case CASE condition COLON statement
+            ;
+
+default_case : DEFAULT COLON statement
+             ;
 
 %%
 
