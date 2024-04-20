@@ -6,7 +6,8 @@
 %}
 
 %%
-
+"//".*                  /* Ignore single-line comments */
+"/*".*"*/"              /* Ignore multi-line comments */
 "public"        {printf("%s",yytext); return PUBLIC; }
 "private"        {printf("%s",yytext); return PRIVATE; }
 "new"             {printf("%s",yytext); return NEW; }
@@ -37,6 +38,8 @@
 "switch"        {printf("%s",yytext); return SWITCH; }
 "case"          {printf("%s",yytext); return CASE; }
 "default"       {printf("%s",yytext); return DEFAULT; }
+"return"       {printf("%s",yytext); return RETURN; }
+"break"       {printf("%s",yytext); return BREAK; }
 ":"       {printf("%s",yytext); return COLON; }
 [a-zA-Z_][a-zA-Z0-9_]*   {printf("%s",yytext); return IDENTIFIER; }
 "{"             {printf("%s",yytext); return LBRACE; }
@@ -51,6 +54,7 @@
 "-"             {printf("%s",yytext); return MINUS; }
 "*"             {printf("%s",yytext); return MULT; }
 "/"             {printf("%s",yytext); return DIV; }
+"//"             {printf("%s",yytext); return COMMENTS; }
 \"[^\"\n]*\"    {printf("%s",yytext); return STRING_LITERAL; }
 .               {printf("%s",yytext); /* Ignore any other characters */ }
 
